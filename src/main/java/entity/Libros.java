@@ -102,4 +102,16 @@ public class Libros {
         result = 31 * result + (precio != null ? precio.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Libros{" +
+                "codigo=" + codigo +
+                ", isbn='" + isbn + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", autor='" + autor + '\'' +
+                ", editorial='" + editorial + '\'' +
+                ", precio=" + precio +
+                "}\n";
+    }
 }
