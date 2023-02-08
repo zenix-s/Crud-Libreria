@@ -114,4 +114,50 @@ public class Libros {
                 ", precio=" + precio +
                 "}\n";
     }
+    public boolean bookExists(String isbn){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            Libros libro = em.find(Libros.class, isbn);
+            if(libro != null){
+                return true;
+            }else{
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }finally {
+            em.close();
+            emf.close();
+        }
+    }
+    public boolean newBook(String isbn, String titulo, String autor, String editorial, int precio){
+        if(bookExists(isbn)){
+            return false;
+        }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            Libros libro = new Libros();
+            libro.setIsbn(isbn);
+            libro.setTitulo(titulo);
+            libro.setAutor(autor);
+            libro.setEditorial(editorial);
+            libro.setPrecio(precio);
+            em.persist(libro);
+            et.commit();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }finally {
+            em.close();
+            emf.close();
+        }
+    }
 }

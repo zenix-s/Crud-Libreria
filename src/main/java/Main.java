@@ -1,12 +1,13 @@
-import entity.Libros;
-import entity.Vendedores;
-import views.dashBoard;
+import views.DashBoard;
 
-import javax.persistence.*;
-import java.util.HashMap;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args){
+        connect();
+        DashBoard.main();
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
 //        EntityManager em = emf.createEntityManager();
 //        EntityTransaction et = em.getTransaction();
@@ -52,7 +53,19 @@ public class Main {
 //        }
 
 //        execute dashBoard view form from views package
-        dashBoard.main(args);
+//        dashBoard.main(args);
 
+
+    }
+    public static void connect(){
+        String url = "jdbc:mysql://localhost:3306/valar";
+        String username = "root";
+        String password = "rootpass123";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            System.out.println("Conexión exitosa!");
+        } catch (SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+        }
     }
 }
