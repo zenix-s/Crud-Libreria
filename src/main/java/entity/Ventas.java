@@ -105,23 +105,6 @@ public class Ventas {
             et.begin();
             Ventas venta = new Ventas();
 
-//            Clientes cliente = new Clientes();
-//            if (!cliente.clienteExiste(idCliente)){
-//                System.out.println("Cliente no existe");
-//                return false;
-//            }
-//            Libros libro = new Libros();
-//            if (!libro.bookExists(isbn)){
-//                System.out.printf("Libro no existe");
-//                return false;
-//            }
-//
-//            Vendedores vendedor = new Vendedores();
-//            if (!vendedor.vendorExistId(idVendedor)){
-//                System.out.println("Vendedor no existe");
-//                return false;
-//            }
-
             venta.setIsbn(isbn);
             venta.setIdCliente(idCliente);
             venta.setIdVendedor(idVendedor);

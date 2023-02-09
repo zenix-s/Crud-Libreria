@@ -16,11 +16,11 @@ public class ventasView extends JFrame{
     private JComboBox newventaIsbn;
     private JComboBox newventaVendedor;
     private JComboBox newventaCliente;
-    private JTextField textField1;
+    private JTextField sventaIdCliente;
     private JPanel addventa_section;
     private JPanel searchventa_section;
-    private JTextField sventaName;
-    private JTextField sventaUsername;
+    private JTextField sventaIsbn;
+    private JTextField sventaIdVendedor;
     private JTextField searchventaId;
     private JButton searchventaButton;
     private JPanel viewventa;
@@ -35,6 +35,9 @@ public class ventasView extends JFrame{
     }
 
     private JPanel panel1;
+    private JTextField filterventaIdvendedor;
+    private JTabbedPane tabbedPane1;
+    private JTable ventasVendedor;
 
     ventasView(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,7 +86,7 @@ public class ventasView extends JFrame{
             if (newventaIsbn.getSelectedIndex() == 0 || newventaVendedor.getSelectedIndex() == 0 || newventaCliente.getSelectedIndex() == 0){
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un libro, un vendedor y un cliente");
             }else{
-                if (venta.newVenta(newventaIsbn.getSelectedItem().toString(), Integer.parseInt(newventaVendedor.getSelectedItem().toString()), Integer.parseInt(newventaCliente.getSelectedItem().toString()))){
+                if (venta.newVenta(newventaIsbn.getSelectedItem().toString(), Integer.parseInt(newventaCliente.getSelectedItem().toString()), Integer.parseInt(newventaVendedor.getSelectedItem().toString()))){
                     JOptionPane.showMessageDialog(null, "Venta agregada correctamente");
                     cargarVentas();
                 }else{
@@ -92,11 +95,94 @@ public class ventasView extends JFrame{
             }
         });
 
+        searchventaButton.addActionListener(e -> {
+            if (searchventaButton.getText().equals("Limpiar")){
+                searchventaId.setText("");
+                sventaIdCliente.setText("");
+                sventaIdVendedor.setText("");
+                sventaIsbn.setText("");
+                searchventaId.setEnabled(true);
+                searchventaButton.setText("Buscar");
+                modificarventaButton.setEnabled(false);
+                eliminarventaButton.setEnabled(false);
+                return;
+            }
+            if (searchventaId.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Debe ingresar un ID de venta");
+            }else{
+                Ventas venta1 = venta.getVenta(Integer.parseInt(searchventaId.getText()));
+                if (venta1 != null){
+                    sventaIdCliente.setText(String.valueOf(venta1.getIdCliente()));
+                    sventaIdVendedor.setText(String.valueOf(venta1.getIdVendedor()));
+                    sventaIsbn.setText(venta1.getIsbn());
+                    modificarventaButton.setEnabled(true);
+                    eliminarventaButton.setEnabled(true);
+                    searchventaId.setEnabled(false);
+                    searchventaButton.setText("Limpiar");
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se encontro la venta");
+                }
+            }
+        });
+
+        modificarventaButton.addActionListener(e -> {
+            if (sventaIsbn.getText().isEmpty() || sventaIdVendedor.getText().isEmpty() || sventaIdCliente.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos");
+            }else{
+                if (venta.updateVenta(Integer.parseInt(searchventaId.getText()), sventaIsbn.getText(), Integer.parseInt(sventaIdVendedor.getText()), Integer.parseInt(sventaIdCliente.getText()))){
+                    JOptionPane.showMessageDialog(null, "Venta modificada correctamente");
+                    cargarVentas();
+                    searchventaButton.doClick();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error al modificar la venta");
+                }
+            }
+        });
+
+        eliminarventaButton.addActionListener(e -> {
+            if (JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la venta?", "Eliminar venta", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                if (venta.deleteVenta(Integer.parseInt(searchventaId.getText()))){
+                    JOptionPane.showMessageDialog(null, "Venta eliminada correctamente");
+                    cargarVentas();
+                    searchventaButton.doClick();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error al eliminar la venta");
+                }
+            }
+        });
+
+        filterventaButton.addActionListener(e -> {
+            if (filterventaButton.getText().equals("Limpiar")){
+                filterventaIdvendedor.setText("");
+                filterventaIdvendedor.setEnabled(true);
+                filterventaButton.setText("Filtrar");
+                cargarVentas();
+                return;
+            }
+            if (filterventaIdvendedor.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Debe ingresar un ID de vendedor");
+            }else{
+                Ventas venta1 = new Ventas();
+                List<Ventas> ventas = venta1.getVentasByVendor(Integer.parseInt(filterventaIdvendedor.getText()));
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("ID_Venta");
+                model.addColumn("ID_Cliente");
+                model.addColumn("ID_Vendedor");
+                model.addColumn("ISBN_Libro");
+                for (Ventas v : ventas){
+                    model.addRow(new Object[]{v.getIdVenta(), v.getIdCliente(), v.getIdVendedor(), v.getIsbn()});
+                }
+                ventaTable.setModel(model);
+                filterventaIdvendedor.setEnabled(false);
+                filterventaButton.setText("Limpiar");
+            }
+        });
 
     }
 
     private void cargarVentas(){
         Ventas venta = new Ventas();
+//        vestas all
         List<Ventas> ventas = venta.getVentas();
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID_Venta");
@@ -107,6 +193,20 @@ public class ventasView extends JFrame{
             model.addRow(new Object[]{v.getIdVenta(), v.getIdCliente(), v.getIdVendedor(), v.getIsbn()});
         }
         ventaTable.setModel(model);
+
+//      Vestas / vendedor
+        Vendedores vendedor = new Vendedores();
+        List<Vendedores> vendedores = vendedor.getVendedores();
+        DefaultTableModel model1 = new DefaultTableModel();
+        model1.addColumn("ID_Vendedor");
+        model1.addColumn("Total de ventas");
+        int total = 0;
+        for (Vendedores v : vendedores){
+            List<Ventas> ventas1 = venta.getVentasByVendor(v.getIdVendedor());
+            total = ventas1.size();
+            model1.addRow(new Object[]{v.getIdVendedor(), total});
+        }
+        ventasVendedor.setModel(model1);
     }
 
 }

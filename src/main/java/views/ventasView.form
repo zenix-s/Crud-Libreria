@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="panel1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1018" height="575"/>
+      <xy x="20" y="20" width="1018" height="605"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -165,7 +165,7 @@
                           <text value="ISBN"/>
                         </properties>
                       </component>
-                      <component id="f37a" class="javax.swing.JTextField" binding="sventaName">
+                      <component id="f37a" class="javax.swing.JTextField" binding="sventaIsbn">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <minimum-size width="-1" height="35"/>
@@ -195,7 +195,7 @@
                           <text value="ID_Vendedor"/>
                         </properties>
                       </component>
-                      <component id="af484" class="javax.swing.JTextField" binding="sventaUsername">
+                      <component id="af484" class="javax.swing.JTextField" binding="sventaIdVendedor">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <minimum-size width="-1" height="35"/>
@@ -225,7 +225,7 @@
                           <text value="ID_Cliente"/>
                         </properties>
                       </component>
-                      <component id="10bae" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                      <component id="10bae" class="javax.swing.JTextField" binding="sventaIdCliente">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <minimum-size width="-1" height="35"/>
@@ -338,10 +338,10 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="ID_Cliente"/>
+                      <text value="ID_Vendedor"/>
                     </properties>
                   </component>
-                  <component id="14501" class="javax.swing.JTextField" binding="filterventaIdCliente">
+                  <component id="14501" class="javax.swing.JTextField" binding="filterventaIdvendedor">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -375,6 +375,53 @@
                   </component>
                 </children>
               </scrollpane>
+            </children>
+          </grid>
+          <grid id="a93d5" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="ESTADISTICAS"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <tabbedpane id="4ec8e" binding="tabbedPane1" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="200" height="200"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="4ee13" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <tabbedpane title="NºVENTAS/VENDEDOR"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <scrollpane id="6eb6">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="86044" class="javax.swing.JTable" binding="ventasVendedor">
+                            <constraints/>
+                            <properties>
+                              <font name="Roboto Light" size="16"/>
+                              <rowHeight value="40"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                </children>
+              </tabbedpane>
             </children>
           </grid>
         </children>
