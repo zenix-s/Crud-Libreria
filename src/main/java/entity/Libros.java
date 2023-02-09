@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "libros")
@@ -120,7 +121,9 @@ public class Libros {
         EntityTransaction et = em.getTransaction();
         try{
             et.begin();
-            Libros libro = em.find(Libros.class, isbn);
+            Libros libro = em.createQuery("SELECT l FROM Libros l WHERE l.isbn = :isbn", Libros.class)
+                    .setParameter("isbn", isbn)
+                    .getSingleResult();
             if(libro != null){
                 return true;
             }else{
@@ -155,6 +158,100 @@ public class Libros {
         }catch (Exception e){
             e.printStackTrace();
             return false;
+        }finally {
+            em.close();
+            emf.close();
+        }
+    }
+    public boolean deleteBook(String isbn){
+        if(!bookExists(isbn)){
+            return false;
+        }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            Libros libro = (Libros) em.createQuery("SELECT l FROM Libros l WHERE l.isbn = :isbn").setParameter("isbn", isbn).getSingleResult();
+            em.remove(libro);
+            et.commit();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }finally {
+            em.close();
+            emf.close();
+        }
+    }
+    public boolean updateBook(String isbn, String titulo, String autor, String editorial, int precio){
+        if(!bookExists(isbn)){
+            return false;
+        }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            Libros libro = (Libros) em.createQuery("SELECT l FROM Libros l WHERE l.isbn = :isbn").setParameter("isbn", isbn).getSingleResult();
+            libro.setTitulo(titulo);
+            libro.setAutor(autor);
+            libro.setEditorial(editorial);
+            libro.setPrecio(precio);
+            em.merge(libro);
+            et.commit();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }finally {
+            em.close();
+            emf.close();
+        }
+    }
+    public List<Libros> getBooks(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            List<Libros> libros = em.createQuery("SELECT l FROM Libros l").getResultList();
+            return libros;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            em.close();
+            emf.close();
+        }
+    }
+    public List<Libros> getBooksByAutor(String autor){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            List<Libros> libros = em.createQuery("SELECT l FROM Libros l WHERE l.autor = :autor").setParameter("autor", autor).getResultList();
+            return libros;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            em.close();
+            emf.close();
+        }
+    }
+    public Libros getBook(String isbn){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            Libros libro = (Libros) em.createQuery("SELECT l FROM Libros l WHERE l.isbn = :isbn").setParameter("isbn", isbn).getSingleResult();
+            return libro;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }finally {
             em.close();
             emf.close();
