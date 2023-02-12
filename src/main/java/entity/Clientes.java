@@ -1,3 +1,7 @@
+// @author: sergio fernandez fernandez
+// @date: 2023/02/12
+// @github: https://github.com/zenix-s
+// @webpage: https://setfernet.com/
 package entity;
 
 import javax.persistence.*;
@@ -14,6 +18,10 @@ public class Clientes {
     @Column(name = "nombre")
     private String nombre;
 
+    @Basic
+    @Column(name = "dni")
+    private String dni;
+
     public int getIdCliente() {
         return idCliente;
     }
@@ -28,6 +36,14 @@ public class Clientes {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     @Override
@@ -50,14 +66,6 @@ public class Clientes {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Clientes{" +
-                "idCliente=" + idCliente +
-                ", nombre='" + nombre + '\'' +
-                '}';
-    }
-
     public boolean clienteExiste(int idCliente){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
         EntityManager em = emf.createEntityManager();
@@ -78,7 +86,7 @@ public class Clientes {
         return false;
     }
 
-    public boolean newCliente(String nombre){
+    public boolean newCliente(String nombre, String dni){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
@@ -86,6 +94,7 @@ public class Clientes {
             et.begin();
             Clientes cliente = new Clientes();
             cliente.setNombre(nombre);
+            cliente.setDni(dni);
             em.persist(cliente);
             et.commit();
             return true;
@@ -117,7 +126,7 @@ public class Clientes {
         }
     }
 
-    public boolean updateCliente(int idCliente, String nombre){
+    public boolean updateCliente(int idCliente, String nombre, String dni){
         if(!clienteExiste(idCliente)){
             return false;
         }
@@ -128,6 +137,7 @@ public class Clientes {
             et.begin();
             Clientes cliente = em.find(Clientes.class, idCliente);
             cliente.setNombre(nombre);
+            cliente.setDni(dni);
             em.merge(cliente);
             et.commit();
             return true;

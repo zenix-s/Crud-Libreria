@@ -24,6 +24,8 @@ public class clientesView extends JFrame{
     private JPanel panel1;
     private JButton modificarClienteButton;
     private JButton eliminarClienteButton;
+    private JTextField newClientedni;
+    private JTextField sClientedni;
 
     clientesView() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,10 +54,10 @@ public class clientesView extends JFrame{
         Clientes cliente = new Clientes();
 
         newClientButton.addActionListener(e -> {
-            if (newClientName.getText().isEmpty()) {
+            if (newClientName.getText().isEmpty() || newClientedni.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos");
             } else {
-                if (cliente.newCliente(newClientName.getText())) {
+                if (cliente.newCliente(newClientName.getText(), newClientedni.getText())) {
                     JOptionPane.showMessageDialog(null, "Cliente añadido correctamente");
                     newClientName.setText("");
                 } else {
@@ -69,6 +71,7 @@ public class clientesView extends JFrame{
             if (searchClientButton.getText().equals("Limpiar")) {
                 searchClientId.setText("");
                 sClienteName.setText("");
+                sClientedni.setText("");
                 searchClientId.setEnabled(true);
                 searchClientButton.setText("Buscar");
                 modificarClienteButton.setEnabled(false);
@@ -81,6 +84,7 @@ public class clientesView extends JFrame{
                 Clientes clienteSeleccionado = cliente.getCliente(Integer.parseInt(searchClientId.getText()));
                 if (clienteSeleccionado != null) {
                     sClienteName.setText(clienteSeleccionado.getNombre());
+                    sClientedni.setText(clienteSeleccionado.getDni());
                     searchClientId.setEnabled(false);
                     searchClientButton.setText("Limpiar");
                     modificarClienteButton.setEnabled(true);
@@ -100,10 +104,11 @@ public class clientesView extends JFrame{
                     JOptionPane.showMessageDialog(null, "El nombre del cliente no puede tener más de 25 caracteres");
                     return;
                 }
-                if (cliente.updateCliente(Integer.parseInt(searchClientId.getText()), sClienteName.getText())) {
+                if (cliente.updateCliente(Integer.parseInt(searchClientId.getText()), sClienteName.getText(), sClientedni.getText())) {
                     JOptionPane.showMessageDialog(null, "Cliente modificado correctamente");
                     searchClientId.setText("");
                     sClienteName.setText("");
+                    sClientedni.setText("");
                 } else {
                     JOptionPane.showMessageDialog(null, "Cliente no encontrado" + searchClientId.getText());
                 }
@@ -119,6 +124,7 @@ public class clientesView extends JFrame{
                     JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente");
                     searchClientId.setText("");
                     sClienteName.setText("");
+                    sClientedni.setText("");
                 } else {
                     JOptionPane.showMessageDialog(null, "Cliente no encontrado");
                 }
@@ -142,7 +148,8 @@ public class clientesView extends JFrame{
                     DefaultTableModel model = new DefaultTableModel();
                     model.addColumn("ID");
                     model.addColumn("Nombre");
-                    model.addRow(new Object[]{clienteSeleccionado.getIdCliente(), clienteSeleccionado.getNombre()});
+                    model.addColumn("DNI");
+                    model.addRow(new Object[]{clienteSeleccionado.getIdCliente(), clienteSeleccionado.getNombre(), clienteSeleccionado.getDni()});
                     booksTable.setModel(model);
                     filterClienteButton.setText("limpiar");
                     filterClienteId.setEnabled(false);
@@ -162,8 +169,9 @@ public class clientesView extends JFrame{
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Nombre");
+        model.addColumn("DNI");
         for (Clientes c : clientes){
-            model.addRow(new Object[]{c.getIdCliente(), c.getNombre()});
+            model.addRow(new Object[]{c.getIdCliente(), c.getNombre(), c.getDni()});
         }
         booksTable.setModel(model);
     }

@@ -1,3 +1,7 @@
+// @author: sergio fernandez fernandez
+// @date: 2023/02/12
+// @github: https://github.com/zenix-s
+// @webpage: https://setfernet.com/
 import views.DashBoard;
 
 import java.sql.Connection;
@@ -19,6 +23,5 @@ public class Main {
         } catch (SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
         }
-
     }
 }

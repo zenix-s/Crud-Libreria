@@ -1,3 +1,7 @@
+// @author: sergio fernandez fernandez
+// @date: 2023/02/12
+// @github: https://github.com/zenix-s
+// @webpage: https://setfernet.com/
 package entity;
 
 import javax.persistence.*;
