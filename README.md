@@ -14,9 +14,9 @@ Para el proyecto he decidido trabajar con la idea de una librería, para ello se
 
 ![image2](img/image2.png)  Unique key
 
-![[Pasted image 20230212152722.png]]  Primary Key
+![[Pasted image 20230212152722.png]](img/Pasted%20image%2020230212152722.png)  Primary Key
 
-![[Pasted image 20230212152814.png]] Foreign Key
+![[Pasted image 20230212152814.png]](img/Pasted%20image%2020230212152814.png) Foreign Key
 
 ## Crear Tablas
 ---
@@ -76,10 +76,10 @@ ALTER TABLE `ventas`
 ## Conectar Base de Datos
 ---
 Puesto que la aplicación se esta desarrollando con IntelliJ lo primero sea crear un nuevo proyecto
-![[Pasted image 20230212161143.png]]
+![[Pasted image 20230212161143.png]](img/Pasted%20image%2020230212161143.png)
 Nuestro Proyecto los generaremos con `Jakarta EE` Indicamos el nombre del proyecto en mi caso `ProyApp` y seleccionamos el template `Library`, el resto lo dejamos con las opciones default.
 
-![[Pasted image 20230212161407.png]]
+![[Pasted image 20230212161407.png]](img/Pasted%20image%2020230212161407.png)
 A continuación seleccionamos las opciones `Persistance (JPA)` y `Hibernate` y creamos el proyecto
 
 Una vez creado el proyecto tenemos que añadir algunas cosas a nuestro `pom.xml`.
@@ -102,7 +102,7 @@ y puesto que vamos a conectar una base de datos mysql también tenemos que conec
 
 Con el comando `Crtl + shift + O` podemos importar las dependencias.
 
-![[Pasted image 20230212161925.png]]
+![[Pasted image 20230212161925.png]](img/Pasted%20image%2020230212161925.png)
 
 A continuación nos pedirá el enlace a nuestra base de datos, tenemos que tener en cuenta 3 valores:
 1. Localización de la base de datos - localhost
@@ -110,27 +110,27 @@ A continuación nos pedirá el enlace a nuestra base de datos, tenemos que tener
 3. Nombre de la base de datos - valar
 `jdbc:mysql://localhost:3306/valar`
 
-![[Pasted image 20230212162239.png]]
+![[Pasted image 20230212162239.png]](img/Pasted%20image%2020230212162239.png)
 Una vez conectada veremos algo como esto
-![[Pasted image 20230212162308.png]]
+![[Pasted image 20230212162308.png]](img/Pasted%20image%2020230212162308.png)
 
 Aquí se nos piden algunos datos como el usuario y la contraseña de nuestra base de datos, rellenamos esos campos y pulsamos ok, también tenemos la opción de testear la conexión para ver si todo está correcto, si lo hemos hecho todo bien veremos algo como esto:
-![[Pasted image 20230212162606.png]]
+![[Pasted image 20230212162606.png]](img/Pasted%20image%2020230212162606.png)
 Ahora vamos a generar la persistencia de nuestra base de datos.
 
-![[9 1.png]]
+![[9 1.png]](img/9%201.png)
 
 
 una vez abierto hacemos click derecho sobre default y Pulsamos en la opción `By Database Schema`
-![[adjuntos/10.png]]
+![[adjuntos/10.png]](img/10.png)
 Indicamos las tablas a importar
-![[adjuntos/11.png]]
+![[adjuntos/11.png]](img/11.png)
 
 Una vez finalizado podemos ver en nuestra carpeta entity a las clases generadas por el mapeo del Hibernate
-![[adjuntos/12.png]]
+![[adjuntos/12.png]](img/12.png)
 
 y en el default las tablas
-![[adjuntos/13.png]]
+![[adjuntos/13.png]](img/13.png)
 
 ## Cambios
 ---
@@ -319,7 +319,7 @@ public boolean deleteCliente(int idCliente){
 
 ## Interfaz
 Para empezar a crear una interfaz 
-![[Pasted image 20230212180930.png]]
+![[Pasted image 20230212180930.png]](img/Pasted%20image%2020230212180930.png)
 
 Utilizamos este código para activar nuestra interfaz.
 ```java
@@ -369,13 +369,13 @@ public void cargarClientes(){
 
 ## Imagenes de la interfaz
 ### Menu
-![[Pasted image 20230212181510.png]]
+![[Pasted image 20230212181510.png]](img/Pasted%20image%2020230212181510.png)
 ### Libros
 ##### Añadir Libro
-![[Pasted image 20230212181521.png]]
+![[Pasted image 20230212181521.png]](img/Pasted%20image%2020230212181521.png)
 
 #### Buscar Libro
-![[Pasted image 20230212181556.png]]
+![[Pasted image 20230212181556.png]](img/Pasted%20image%2020230212181556.png)
 
 #### Visulizar tabla
-![[Pasted image 20230212181615.png]]
+![[Pasted image 20230212181615.png]](img/Pasted%20image%2020230212181615.png)
