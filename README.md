@@ -10,9 +10,9 @@ También se utiliza Persistance una API para la persistencia de datos, permite e
 ---
 Para el proyecto he decidido trabajar con la idea de una librería, para ello se ha utilizado 4 tablas
 
-![[Pasted image 20230212130528.png]]
+![image1](img/image1.png)
 
-![[Pasted image 20230212152637.png]]  Unique key
+![image2](img/image2.png)  Unique key
 
 ![[Pasted image 20230212152722.png]]  Primary Key
 
